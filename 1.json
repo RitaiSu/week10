@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/RitaiSu/3179/main/test1.csv"
+  },
+  "width": 800,
+  "height": 400,
+  "layer": [
+    {
+      "mark": "bar",
+      "selection": {
+        "regionFilter": {
+          "type": "single",
+          "fields": ["Region"],
+          "bind": {
+            "input": "select",
+            "options": [
+              null,
+              "East Asia & Pacific",
+              "Europe & Central Asia",
+              "Middle East & North Africa",
+              "Latin America & Caribbean",
+              "North America",
+              "South Asia",
+              "Sub-Saharan Africa"
+            ]
+          },
+          "empty": "all"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum['Prevelance of Undernourishment'] != null && !isNaN(datum['Prevelance of Undernourishment'])"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "Country n",
+          "type": "nominal",
+          "axis": {"title": "Country", "labelAngle": -45}
+        },
+        "y": {
+          "field": "Prevelance of Undernourishment",
+          "type": "quantitative",
+          "axis": {"title": "Prevalence of Undernourishment"}
+        },
+        "color": {
+          "field": "Region",
+          "type": "nominal",
+          "legend": {"title": "Region"}
+        },
+        "tooltip": [
+          {"field": "Country n", "type": "nominal"},
+          {"field": "Prevelance of Undernourishment", "type": "quantitative"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dy": -320,
+        "dx": 5,
+        "fontSize": 12
+      },
+      "encoding": {
+        "text": {"value": "Note: Select a region from the dropdown to filter."}
+      }
+    }
+  ],
+  "config": {}
+}
